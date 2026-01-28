@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sennelier l'Aquarelle 申內利爾專家水彩 - 完整色卡</title>
+    <style>
+        :root {
+            /* --- [關鍵設定] 雪碧圖參數 (Sennelier) --- */
+            --sprite-cols: 5;    /* 寬度 5 色 */
+            --sprite-rows: 20;   /* 高度 20 排 */
+            
+            /* --- 卡片視覺設定 --- */
+            --bg-color: #f8f9fa;
+            --primary-color: #212529;
+            --accent-color: #6c757d;
+            --card-radius: 8px;
+            /* 圖片寬 750px / 5 = 150px; 高 1500px / 20 = 75px; 比例為 2:1 */
+            --swatch-ratio: 2 / 1; 
+            --zoom-tolerance: 1.04; /* 1% 放大容錯，消除白邊 */
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--primary-color);
+            margin: 0;
+            padding: 40px 20px;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* --- Header --- */
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 300;
+            letter-spacing: 2px;
+            margin: 0 0 10px 0;
+            text-transform: uppercase;
+        }
+        
+        p {
+            color: var(--accent-color);
+            font-size: 0.9rem;
+            margin-bottom: 30px;
+        }
+
+        .search-wrapper {
+            position: relative;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        #searchInput {
+            width: 100%;
+            padding: 12px 20px;
+            font-size: 16px;
+            border: 1px solid #ced4da;
+            border-radius: 50px;
+            outline: none;
+            transition: box-shadow 0.3s ease, border-color 0.3s ease;
+            box-sizing: border-box;
+            background: white;
+        }
+
+        #searchInput:focus {
+            border-color: #80bdff;
+            box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.1);
+        }
+
+        /* --- Grid Layout --- */
+        .color-grid {
+            display: grid;
+            /* 卡片最小寬度設為 220px 以適應內容 */
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 24px;
+        }
+
+        /* --- Card Component --- */
+        .card {
+            background: white;
+            border-radius: var(--card-radius);
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #eaeaea;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+            border-color: #dee2e6;
+        }
+
+        /* --- Swatch (Visual) --- */
+        .swatch {
+            width: 100%;
+            aspect-ratio: var(--swatch-ratio);
+            position: relative;
+            overflow: hidden;
+            background-color: #eee;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .swatch::before {
+            content: '';
+            position: absolute;
+            top: 0; 
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* 引用您的圖片 */
+            background-image: url("Sennelier-l'Aquarelle-Color-chart.jpg");
+            background-repeat: no-repeat;
+            
+            /* 雪碧圖尺寸計算 */
+            background-size: calc(var(--sprite-cols) * 100%) calc(var(--sprite-rows) * 100%);
+            
+            /* CSS 變數定位 */
+            background-position: var(--bg-x) var(--bg-y);
+            
+            transform: scale(var(--zoom-tolerance));
+            transform-origin: center center;
+        }
+
+        /* --- Info Section --- */
+        .info {
+            padding: 16px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 6px;
+        }
+
+        .color-id {
+            font-size: 1.25em;
+            font-weight: 700;
+            color: #000;
+        }
+
+        .name-en {
+            font-size: 0.95em;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+
+        .details-row {
+            margin-top: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            font-size: 0.75em;
+            color: #666;
+        }
+
+        .pigment-info {
+            font-family: "Courier New", monospace;
+            color: #555;
+            background: #f8f9fa;
+            padding: 2px 4px;
+            border-radius: 4px;
+            align-self: flex-start;
+        }
+
+        .meta-badges {
+            display: flex;
+            gap: 6px;
+            margin-top: 4px;
+        }
+
+        .badge {
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.9em;
+            border: 1px solid #eee;
+        }
+
+        .badge-astm { color: #2ecc71; border-color: #2ecc71; }
+        .badge-prop { color: #e67e22; border-color: #e67e22; }
+
+        .no-result {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 60px;
+            color: #adb5bd;
+            font-size: 1.1em;
+        }
+
+        /* --- Mobile Responsive --- */
+        @media (max-width: 768px) {
+            body { padding: 20px 10px; }
+            h1 { font-size: 1.5rem; }
+            .color-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+            .info { padding: 10px; }
+            .color-id { font-size: 1.1em; }
+            .name-en { font-size: 0.85em; }
+            .pigment-info { font-size: 0.7em; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Sennelier l'Aquarelle</h1>
+        <p>申內利爾 蜂蜜水彩 | 專業級色卡 (98色)</p>
+        <div class="search-wrapper">
+            <input type="text" id="searchInput" placeholder="搜尋色號 (671)、名稱 (Helios) 或成分 (PV19)...">
+        </div>
+    </header>
+
+    <main id="gridContainer" class="color-grid"></main>
+</div>
+
+<script>
+    /**
+     * Configuration
+     */
+    const CONFIG = {
+        spriteCols: 5,
+        spriteRows: 20
+    };
+
+    /**
+     * Data Source
+     * 解析自您提供的清單，已處理 Pigments 與 ASTM 格式
+     */
+    const colorData = [
+        { id: '680', name: 'Permanent Magenta', pigment: 'PV19', prop: 'NG', astm: 'I' },
+        { id: '671', name: 'Helios Purple', pigment: 'PR122', prop: 'NG', astm: 'III' },
+        { id: '635', name: 'Carmine', pigment: 'PV19', prop: 'NG', astm: 'I' },
+        { id: '695', name: 'Alizarin Crimson Lake', pigment: 'PR83', prop: 'NG', astm: 'III' },
+        { id: '919', name: 'Caput Mortum', pigment: 'PR101', prop: 'G', astm: 'I' },
+        { id: '690', name: 'Rose Madder Lake', pigment: 'PV19', prop: 'NG', astm: 'I' },
+        { id: '688', name: 'Crimson Lake', pigment: 'PR209; PR146; PR206', prop: 'NG', astm: 'nr' },
+        { id: '499', name: 'Perylen Brown', pigment: 'PR209; PY83; PR179', prop: 'NG', astm: 'II' },
+        { id: '679', name: 'Primaire Quinacridone Red', pigment: 'PR209', prop: 'NG', astm: 'II' },
+        { id: '611', name: 'Cadmium Red Purple', pigment: 'PR108', prop: 'G', astm: 'I' },
+        { id: '689', name: 'Alizarin Crimson', pigment: 'PR209; PY83; PR179', prop: 'NG', astm: 'II' },
+        { id: '636', name: 'Sennelier Red', pigment: 'PR254', prop: 'NG', astm: 'nr' },
+        { id: '619', name: 'Bright Red', pigment: '—', prop: 'NG', astm: 'nr' },
+        { id: '699', name: 'Permanent Alizarin Crimson Deep (old)', pigment: 'PR206', prop: 'NG', astm: 'nr' },
+        { id: '605', name: 'Cadmium Red Light', pigment: 'PR108', prop: 'SG', astm: 'I' },
+        { id: '691', name: 'Rose Dore Madder Lake', pigment: 'PR255', prop: 'NG', astm: 'I' },
+        { id: '612', name: 'Scarlet Laquer', pigment: 'PR188', prop: 'NG', astm: 'II' },
+        { id: '675', name: 'French Vermilion', pigment: 'PR242', prop: 'NG', astm: 'I' },
+        { id: '623', name: 'Venetian Red', pigment: 'PR101', prop: 'SG', astm: 'I' },
+        { id: '407', name: 'Van Dyck Brown', pigment: 'PBk7; PR101', prop: 'NG', astm: 'I' },
+        { id: '211', name: 'Burnt Sienna', pigment: 'PBr7', prop: 'SG', astm: 'I' },
+        { id: '641', name: 'Sennelier Orange', pigment: 'PO73', prop: 'NG', astm: 'nr' },
+        { id: '645', name: 'Chinese Orange', pigment: 'PY150; PR209; PBr23', prop: 'NG', astm: 'I' },
+        { id: '435', name: 'Transparent Brown', pigment: 'PBk7; PR101', prop: 'G', astm: 'I' },
+        { id: '202', name: 'Burnt Umber', pigment: 'PBr7', prop: 'SG', astm: 'I' },
+        { id: '640', name: 'Red Orange', pigment: 'PO43; PY83', prop: 'NG', astm: 'I' },
+        { id: '440', name: 'Warm Sepia', pigment: 'PBr7; PBk7', prop: 'G', astm: 'I' },
+        { id: '537', name: 'Cadmium Yellow Orange', pigment: 'PY35; PO20', prop: 'NG', astm: 'II' },
+        { id: '599', name: 'Quinacridone Gold', pigment: 'PR101; PY150; PR206', prop: 'SG', astm: 'nr' },
+        { id: '257', name: 'Gold Ochre', pigment: 'PY119; PY42; PY83', prop: 'NG', astm: 'nr' },
+        { id: '755', name: 'Ivory Black', pigment: 'PBk9', prop: 'G', astm: 'I' },
+        { id: '208', name: 'Raw Sienna', pigment: 'PBr7', prop: 'SG', astm: 'I' },
+        { id: '205', name: 'Raw Umber', pigment: 'PBr7', prop: 'SG', astm: 'I' },
+        { id: '533', name: 'Cadmium Yellow Deep', pigment: 'PY35', prop: 'NG', astm: 'I' },
+        { id: '753', name: 'Lamp Black', pigment: 'PBk9; PY43', prop: 'G', astm: 'I' },
+        { id: '705', name: 'Warm Grey', pigment: 'PW6; PY42; PBk11; PR101', prop: 'NG', astm: 'I' },
+        { id: '252', name: 'Yellow Ochre', pigment: 'PY43', prop: 'SG', astm: 'I' },
+        { id: '443', name: 'Raw Sepia', pigment: 'PBr7; PBk7', prop: 'SG', astm: 'I' },
+        { id: '254', name: 'Light Yellow Ochre', pigment: 'PY42; PY150', prop: 'SG', astm: 'I' },
+        { id: '566', name: 'Naples Yellow Deep', pigment: 'PBr24', prop: 'G', astm: 'I' },
+        { id: '565', name: 'French Ochre', pigment: 'PY3; PY150; PBr23; PBr7', prop: 'NG', astm: 'I' },
+        { id: '579', name: 'Sennelier Yellow Deep', pigment: 'PY83; PY153', prop: 'NG', astm: 'I' },
+        { id: '517', name: 'Indian Yellow', pigment: 'PY154; PY153', prop: 'NG', astm: 'II' },
+        { id: '567', name: 'Naples Yellow', pigment: 'PY35; PW6; PW4', prop: 'NG', astm: 'I' },
+        { id: '116', name: 'Titanium White', pigment: 'PW6', prop: 'NG', astm: 'I' },
+        { id: '857', name: 'Brown Green', pigment: 'PY129', prop: 'NG', astm: 'nr' },
+        { id: '578', name: 'Sennelier Yellow Light', pigment: 'PY153', prop: 'NG', astm: 'I' },
+        { id: '445', name: 'Brown Pink', pigment: 'PY150; PG7; PBr23', prop: 'NG', astm: 'nr' },
+        { id: '561', name: 'Yellow Lake', pigment: 'PY150', prop: 'SG', astm: 'I' },
+        { id: '112', name: 'Chinese White', pigment: 'PW4', prop: 'NG', astm: 'I' },
+        { id: '587', name: 'Yellow Sophie', pigment: 'PY93', prop: 'NG', astm: 'nr' },
+        { id: '529', name: 'Cadmium Yellow Light', pigment: 'PY35', prop: 'NG', astm: 'I' },
+        { id: '574', name: 'Primary Yellow', pigment: 'PY74', prop: 'NG', astm: 'nr' },
+        { id: '559', name: 'Aureoline', pigment: 'PY40', prop: 'NG', astm: 'II' },
+        { id: '535', name: 'Cadmium Lemon Yellow', pigment: 'PY35', prop: 'NG', astm: 'I' },
+        { id: '576', name: 'Nickel Yellow', pigment: 'PY53', prop: 'G', astm: 'I' },
+        { id: '501', name: 'Lemon Yellow', pigment: 'PY3', prop: 'NG', astm: 'II' },
+        { id: '813', name: 'Olive Green', pigment: 'PY150; PG36; PBr23', prop: 'NG', astm: 'nr' },
+        { id: '709', name: 'Sennelier Grey', pigment: 'PW6; PBk9; PG17', prop: 'NG', astm: 'nr' },
+        { id: '213', name: 'Green Earth', pigment: 'PBr7', prop: 'G', astm: 'I' },
+        { id: '871', name: 'Bright Yellow Green', pigment: 'PG7; PY3', prop: 'NG', astm: 'II' },
+        { id: '819', name: 'Sap Green', pigment: 'PB29; PY153', prop: 'NG', astm: 'II' },
+        { id: '805', name: 'Phthalo Green Light', pigment: 'PG7; PY153', prop: 'NG', astm: 'II' },
+        { id: '815', name: 'Chromium Oxide Green', pigment: 'PG17', prop: 'G', astm: 'I' },
+        { id: '809', name: "Hooker's Green", pigment: 'PY83; PG36', prop: 'NG', astm: 'nr' },
+        { id: '823', name: 'Cadmium Green Light', pigment: 'PG7; PY35', prop: 'NG', astm: 'I' },
+        { id: '817', name: 'Sennelier Green', pigment: 'PG36', prop: 'NG', astm: 'I' },
+        { id: '847', name: 'Emerald Green', pigment: 'PG36', prop: 'NG', astm: 'I' },
+        { id: '899', name: 'Forest Green', pigment: 'PBk7; PG7; PY42', prop: 'NG', astm: 'I' },
+        { id: '837', name: 'Viridian Green', pigment: 'PG18; PG7', prop: 'G', astm: 'I' },
+        { id: '203', name: 'Greenish Umber', pigment: 'PB60; PBk7; PY83', prop: 'SG', astm: 'I' },
+        { id: '807', name: 'Phthalo Green Deep', pigment: 'PB15:3; PG7', prop: 'NG', astm: 'II' },
+        { id: '856', name: 'Cobalt Green', pigment: 'PB36', prop: 'G', astm: 'I' },
+        { id: '341', name: 'Phthalocyanine Turquoise', pigment: 'PB15:3; PG7', prop: 'NG', astm: 'II' },
+        { id: '843', name: 'Turquoise Green', pigment: 'PG50', prop: 'G', astm: 'nr' },
+        { id: '344', name: 'Cinereous Blue', pigment: 'PB15:3; PW4', prop: 'NG', astm: 'II' },
+        { id: '302', name: 'Cerulean Blue (2024)', pigment: 'PB35', prop: 'G', astm: 'I' },
+        { id: '302', name: 'Cerulean Blue', pigment: 'PB28', prop: 'G', astm: 'I' },
+        { id: '305', name: 'Cerulean Blue Red Shade (2024)', pigment: 'PB35', prop: 'G', astm: 'I' },
+        { id: '305', name: 'Cerulean Blue Red Shade', pigment: 'PB28', prop: 'G', astm: 'I' },
+        { id: '308', name: 'Indigo', pigment: 'PB60; PB15:1; PBk7', prop: 'NG', astm: 'II' },
+        { id: '326', name: 'Phthalocyanine Blue', pigment: 'PB15:3', prop: 'NG', astm: 'II' },
+        { id: '318', name: 'Prussian Blue', pigment: 'PB27', prop: 'NG', astm: 'I' },
+        { id: '707', name: 'Light Grey', pigment: 'PW6; PB29; PBk7', prop: 'NG', astm: 'I' },
+        { id: '307', name: 'Cobalt Blue', pigment: 'PB28', prop: 'G', astm: 'I' },
+        { id: '322', name: 'Royal Blue', pigment: 'PB15:6; PW6; PB29', prop: 'NG', astm: 'II' },
+        { id: '312', name: 'Ultramarine Light', pigment: 'PB29', prop: 'SG', astm: 'I' },
+        { id: '309', name: 'Cobalt Deep', pigment: 'PB72', prop: 'G', astm: 'nr' },
+        { id: '315', name: 'Ultramarine Deep', pigment: 'PB29', prop: 'SG', astm: 'I' },
+        { id: '314', name: 'French Ultramarine Blue', pigment: 'PB29; PV15', prop: 'SG', astm: 'I' },
+        { id: '399', name: 'Blue Sennelier', pigment: 'PB15:6', prop: 'NG', astm: 'II' },
+        { id: '395', name: 'Blue Indanthrene', pigment: 'PB60', prop: 'NG', astm: 'nr' },
+        { id: '703', name: "Payne's Grey", pigment: 'PV19; PB15:1; PBk7', prop: 'NG', astm: 'I' },
+        { id: '903', name: 'Blue Violet', pigment: 'PV15', prop: 'G', astm: 'I' },
+        { id: '917', name: 'Dioxazine Purple', pigment: 'PV23', prop: 'NG', astm: 'III' },
+        { id: '905', name: 'Red Violet', pigment: 'PV16', prop: 'G', astm: 'I' },
+        { id: '913', name: 'Cobalt Violet Deep Hue', pigment: 'PR122; PV16', prop: 'SG', astm: 'II' },
+        { id: '931', name: 'Neutral Tint', pigment: 'PB60; PBk7; PR209', prop: 'NG', astm: 'nr' },
+        { id: '911', name: 'Cobalt Violet Light Hue', pigment: 'PR122; PV16; PW6', prop: 'NG', astm: 'II' },
+        { id: '659', name: 'Opera Rose', pigment: 'PR81:1', prop: 'SG', astm: 'nr' }
+    ];
+
+    const gridContainer = document.getElementById('gridContainer');
+    const searchInput = document.getElementById('searchInput');
+
+    /**
+     * 計算 CSS Sprite 的百分比位置
+     * @param {number} index - 陣列索引
+     */
+    const getSpriteStyle = (index) => {
+        const row = Math.floor(index / CONFIG.spriteCols);
+        const col = index % CONFIG.spriteCols;
+        
+        // CSS background-position 百分比計算公式
+        const xPos = (col / (CONFIG.spriteCols - 1)) * 100;
+        const yPos = (row / (CONFIG.spriteRows - 1)) * 100;
+
+        return `--bg-x: ${xPos}%; --bg-y: ${yPos}%;`;
+    };
+
+    /**
+     * 防止 XSS 攻擊
+     */
+    const escapeHTML = (str) => {
+        if (!str) return '';
+        return str.replace(/[&<>"']/g, 
+            tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[tag]));
+    };
+
+    /**
+     * 渲染列表
+     */
+    const renderList = (data) => {
+        if (!gridContainer) return;
+
+        gridContainer.innerHTML = '';
+
+        if (data.length === 0) {
+            gridContainer.innerHTML = '<div class="no-result">沒有找到符合的顏料</div>';
+            return;
+        }
+
+        const fragment = document.createDocumentFragment();
+
+        data.forEach((color, index) => {
+            const card = document.createElement('article');
+            card.className = 'card';
+
+            // 假設圖片順序與陣列順序一致
+            // 若搜尋後要保持正確圖片，需使用原始數據的 index (這裡假設原始順序為 sprite 順序)
+            // 由於搜尋會打亂 index，我們需要一個固定的 spriteIndex。
+            // 簡單解法：在 colorData 預處理時加上 spriteIndex，或在這裡搜尋原始 index。
+            // 這裡使用 indexOf 查找原始位置。
+            const spriteIdx = colorData.indexOf(color);
+
+            card.innerHTML = `
+                <div class="swatch" style="${getSpriteStyle(spriteIdx)}"></div>
+                <div class="info">
+                    <div class="header-row">
+                        <span class="color-id">${escapeHTML(color.id)}</span>
+                    </div>
+                    <div class="name-en">${escapeHTML(color.name)}</div>
+                    
+                    <div class="details-row">
+                        <div class="pigment-info">${escapeHTML(color.pigment)}</div>
+                        <div class="meta-badges">
+                             <span class="badge badge-prop">${escapeHTML(color.prop)}</span>
+                             <span class="badge badge-astm">ASTM: ${escapeHTML(color.astm)}</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+            fragment.appendChild(card);
+        });
+
+        gridContainer.appendChild(fragment);
+    };
+
+    /**
+     * 搜尋處理器
+     */
+    const handleSearch = (e) => {
+        const query = e.target.value.toLowerCase().trim();
+        const filtered = colorData.filter(item => 
+            item.id.includes(query) || 
+            item.name.toLowerCase().includes(query) || 
+            item.pigment.toLowerCase().includes(query)
+        );
+        renderList(filtered);
+    };
+
+    // 初始化
+    document.addEventListener('DOMContentLoaded', () => {
+        renderList(colorData);
+        searchInput.addEventListener('input', handleSearch);
+    });
+</script>
+
+</body>
+</html>
